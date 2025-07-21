@@ -1,7 +1,3 @@
-Sean Muxart
-smuxart3@gatech.edu
-smuxart3
-
 Note: Since my checkboxes were inverted, I used code from alt_checkbox.py and images provided by
 the class resources GitHub page.
 
