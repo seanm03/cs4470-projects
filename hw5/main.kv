@@ -1,0 +1,132 @@
+#: import utils kivy.utils
+#: import Metrics kivy.metrics.Metrics
+#: import Window kivy.core.window.Window
+
+<StartLabel@Label>
+    width: 600 * Metrics.dp
+    size_hint_x: None
+    font_size: self.height * 0.2
+    text_size: self.size
+    halign: 'center'
+    valign: 'bottom'
+
+<SelBoardBtn@ToggleButton>
+    height: 100 * Metrics.dp
+    width: 100 * Metrics.dp
+    size_hint: None, None
+    font_size: self.height * 0.6
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+
+<StartMenu>
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        padding: [100 * Metrics.dp, 5 * Metrics.dp, 100 * Metrics.dp, 10 * Metrics.dp]
+        size_hint: None, None
+
+        StartLabel:
+            text: 'Select Board'
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: [75 * Metrics.dp, 5 * Metrics.dp]
+            spacing: 20 * Metrics.dp
+
+            SelBoardBtn:
+                text: '1'
+                id: board_1
+                custom_value: '1'
+                group: 'sel_board_grp'
+            SelBoardBtn:
+                text: '2'
+                id: board_2
+                custom_value: '2'
+                group: 'sel_board_grp'
+            SelBoardBtn:
+                text: '3'
+                id: board_3
+                custom_value: '3'
+                group: 'sel_board_grp'
+            SelBoardBtn:
+                text: '4'
+                id: board_4
+                custom_value: '4'
+                group: 'sel_board_grp'
+        
+        StartLabel:
+            text: 'Time Mode'
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: [195 * Metrics.dp, 5 * Metrics.dp]
+            spacing: 20 * Metrics.dp
+
+            SelBoardBtn:
+                text: 'Untimed'
+                font_size: self.height * 0.2
+                id: untimed
+                custom_value: '1'
+                group: 'time_mode_grp'
+            SelBoardBtn:
+                text: 'Timed'
+                font_size: self.height * 0.3
+                id: timed
+                custom_value: '2'
+                group: 'time_mode_grp'
+        
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            Button:
+                height: 100 * Metrics.dp
+                width: 200 * Metrics.dp
+                size_hint: None, None
+                font_size: self.height * 0.6
+                text_size: self.size
+                text: 'Submit'
+                id: submit_btn
+                halign: 'center'
+                valign: 'middle'
+                on_press: root.press_submitbtn()
+
+<EndGameScreen>
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        padding: [10 * Metrics.dp, 10 * Metrics.dp]
+        size_hint: (0.4, 0.4)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+        spacing: 5 * Metrics.dp
+
+        Label:
+            height: 100 * Metrics.dp
+            width: 400 * Metrics.dp
+            size_hint: None, None
+            font_size: self.height * 0.5
+            text_size: self.size
+            text: 'Winner: '
+            id: winner
+            halign: 'center'
+            valign: 'middle'
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        padding: [10 * Metrics.dp, 10 * Metrics.dp]
+        size_hint: (0.4, 0.4)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.4}
+        spacing: 5 * Metrics.dp
+
+        Button:
+            height: 100 * Metrics.dp
+            width: 300 * Metrics.dp
+            size_hint: None, None
+            font_size: self.height * 0.5
+            text_size: self.size
+            text: 'Play Again?'
+            halign: 'center'
+            valign: 'middle'
+            on_press: root.press_btn()
