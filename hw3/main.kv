@@ -1,0 +1,58 @@
+#: import utils kivy.utils
+#: import Metrics kivy.metrics.Metrics
+#: import Window kivy.core.window.Window
+#: import Factory kivy.factory.Factory
+
+<AnchorLayout>
+    padding: 30 * Metrics.dp
+
+<PopupFile@Popup>
+    id: file_popup
+    auto_dismiss: True 
+    size_hint: 0.8, 0.8
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+    FileChooserListView: 
+        id: filechooser
+        filters: ['*.txt']
+        on_selection: file_popup.selected(filechooser.selection); root.dismiss()
+
+<MainScreen>
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        spacing: [15 * Metrics.dp, 15 * Metrics.dp]
+        padding: 15 * Metrics.dp
+
+    AnchorLayout:
+        anchor_x: 'left'
+        anchor_y: 'top'
+        padding: [25 * Metrics.dp, 50 * Metrics.dp]
+
+        Button:
+            id: select_file
+            text: 'Select File'
+            height: 60 * Metrics.dp
+            width: 200 * Metrics.dp
+            size_hint: None, None
+            font_size: self.height * 0.6
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+            on_release: Factory.PopupFile(main_app = root).open()
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'bottom'
+
+        PauseButton:
+            id: pause
+            height: 120 * Metrics.dp
+            width: 120 * Metrics.dp
+            size_hint: None, None
+            font_size: self.height * 0.35
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+            disabled: True
+            on_release: root.on_press_pauseplaybtn()
