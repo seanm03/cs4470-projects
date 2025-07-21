@@ -1,0 +1,405 @@
+#: import utils kivy.utils
+#: import Metrics kivy.metrics.Metrics
+#: import Window kivy.core.window.Window
+
+<RatingsLabel@Label>
+    height: 60 * Metrics.dp
+    width: 200 * Metrics.dp
+    size_hint: None, None
+    font_size: self.height * 0.3
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+
+<ScaleLabel@Label>
+    height: 20 * Metrics.dp
+    width: 500 * Metrics.dp
+    size_hint: None, None
+    font_size: self.height * 0.7
+    text_size: self.size
+    halign: 'center'
+    valign: 'bottom'
+    bold: True
+
+<ScaleLabelAxis@Label>
+    height: 30 * Metrics.dp
+    width: 250 * Metrics.dp
+    size_hint: None, None
+    font_size: self.height * 0.4
+    text_size: self.size
+    valign: 'bottom'
+
+<CustomScale>
+    size_hint: None, None
+    height: 40 * Metrics.dp
+    width: 480 * Metrics.dp
+
+<FactorLabel@Label>
+    height: 40 * Metrics.dp
+    width: 250 * Metrics.dp
+    size_hint: None, None
+    font_size: self.height * 0.7
+    text_size: self.size
+    halign: 'left'
+    color: 0.8, 0.8, 1, 1
+    bold: True
+<NumLabel@Label>
+    height: 40 * Metrics.dp
+    width: 100 * Metrics.dp
+    size_hint: None, None
+    halign: 'center'
+    font_size: self.height * 0.7
+    text_size: self.size
+<PairwiseScreenLayout>
+    answer_1: answer_1
+    answer_2: answer_2
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        padding: 5 * Metrics.dp
+        spacing: 5 * Metrics.dp
+
+        Label:
+            text: 'NASA TLX for MANUAL Menu, Size: 40'
+			height: 150 * Metrics.dp
+			font_size: (50 * Metrics.dp) * 0.55
+			halign: 'center'
+			valign: 'middle'
+            bold: True
+        Label:
+            text: 'Please select the item that in your opinion contributes \nmore towards the workload of the task you just completed.'
+            height: 150 * Metrics.dp
+            font_size: (50 * Metrics.dp) * 0.5
+            halign: 'center'
+            valign: 'middle'
+
+        ToggleButton:
+            background_normal: ''
+            background_color: .2, .2, .2, 1
+            id: answer_1
+            text: ''
+            height: 250 * Metrics.dp
+            font_size: (50 * Metrics.dp)
+            halign: 'center'
+            valign: 'middle'
+            on_release: root.change_state('answer_1', 'answer_2')
+
+        Label:
+            text: 'or'
+            height: 250 * Metrics.dp
+            font_size: (50 * Metrics.dp) * 0.7
+            halign: 'center'
+            valign: 'middle'
+
+        ToggleButton:
+            background_normal: ''
+            background_color: .2, .2, .2, 1
+            id: answer_2
+            text: ''
+            height: 250 * Metrics.dp
+            font_size: (50 * Metrics.dp)
+            on_release: root.change_state('answer_2', 'answer_1')
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 15 * Metrics.dp
+            padding: 15 * Metrics.dp
+            
+            Button:
+                id: previous-screen
+                text: 'Previous'
+                height: 250 * Metrics.dp
+                font_size: (50 * Metrics.dp) * 0.8
+                on_press: root.press_previous_pair()
+
+            Button:
+                id: next-screen
+                text: 'Next'
+                height: 250 * Metrics.dp
+                font_size: (50 * Metrics.dp) * 0.8
+                on_press: root.press_next_pair()
+
+<RatingsScaleLayout>
+    GridLayout:
+        cols: 1
+        size: root.width, root.height
+        padding: 10 * Metrics.dp
+        spacing: 1 * Metrics.dp
+
+        Label: 
+			height: 40 * Metrics.dp
+			font_size: self.height * 0.6
+			text_size: self.size
+			size_hint: None, None
+			width: root.width
+			halign: 'center'
+			valign: 'middle'
+			text: 'NASA TLX for MANUAL Menu, Size: 40'
+            bold: True
+        Label:
+            text: 'Rate the following:'
+            height: 30 * Metrics.dp
+            width: root.width
+            size_hint: None, None
+            font_size: self.height * 0.6
+            text_size: self.size
+            halign: 'center'
+            valign: 'middle'
+            bold: True
+        
+        GridLayout:
+            cols: 2
+            size: root.width, root.height
+            spacing: [15 * Metrics.dp, 10 * Metrics.dp]
+            padding: 10 * Metrics.dp
+            RatingsLabel:
+                text: 'Mental Demand'
+                id: mental_label
+            BoxLayout:
+                orientation: 'vertical'
+                ScaleLabel:
+                    text: 'How mentally demanding was the task?'
+                CustomScale:
+                    id: scale_mental_demand
+                    on_visited: mental_label.color = (0, 0, 1, 1); root.update_visited_ct(self, self.visited)
+                BoxLayout:
+                    orientation: 'horizontal'
+                    ScaleLabelAxis:
+                        text: 'Very Low'
+                        halign: 'left'
+                    ScaleLabelAxis:
+                        text: 'Very High'
+                        width: 230 * Metrics.dp
+                        halign: 'right'
+
+            RatingsLabel:
+                text: 'Physical Demand'
+                id: physical_label
+            BoxLayout:
+                orientation: 'vertical'
+                ScaleLabel:
+                    text: 'How physically demanding was the task?'
+                CustomScale:
+                    id: scale_physical_demand
+                    on_visited: physical_label.color = (0, 0, 1, 1); root.update_visited_ct(self, self.visited)
+                BoxLayout:
+                    orientation: 'horizontal'
+                    ScaleLabelAxis:
+                        text: 'Very Low'
+                        halign: 'left'
+                    ScaleLabelAxis:
+                        text: 'Very High'
+                        width: 230 * Metrics.dp
+                        halign: 'right'
+
+            RatingsLabel:
+                text: 'Temporal Demand'
+                id: temporal_label
+            BoxLayout:
+                orientation: 'vertical'
+                ScaleLabel:
+                    text: 'How hurried or rushed was the pace of the task?'
+                CustomScale:
+                    id: scale_temporal_demand
+                    on_visited: temporal_label.color = (0, 0, 1, 1); root.update_visited_ct(self, self.visited)
+                BoxLayout:
+                    orientation: 'horizontal'
+                    ScaleLabelAxis:
+                        text: 'Very Low'
+                        halign: 'left'
+                    ScaleLabelAxis:
+                        text: 'Very High'
+                        width: 230 * Metrics.dp
+                        halign: 'right'
+
+            RatingsLabel:
+                text: 'Performance'
+                id: performance_label
+            BoxLayout:
+                orientation: 'vertical'
+                ScaleLabel:
+                    text: 'How successful were you in accomplishing what you were asked to do?'
+                CustomScale:
+                    id: scale_performance
+                    on_visited: performance_label.color = (0, 0, 1, 1); root.update_visited_ct(self, self.visited)
+                BoxLayout:
+                    orientation: 'horizontal'
+                    ScaleLabelAxis:
+                        text: 'Failure'
+                        halign: 'left'
+                    ScaleLabelAxis:
+                        text: 'Perfect'
+                        width: 230 * Metrics.dp
+                        halign: 'right'
+
+            RatingsLabel:
+                text: 'Effort'
+                id: effort_label
+            BoxLayout:
+                orientation: 'vertical'
+                ScaleLabel:
+                    text: 'How hard did you have to work to accomplish your level of performance?'
+                CustomScale:
+                    id: scale_effort
+                    on_visited: effort_label.color = (0, 0, 1, 1); root.update_visited_ct(self, self.visited)
+                BoxLayout:
+                    orientation: 'horizontal'
+                    ScaleLabelAxis:
+                        text: 'Very Low'
+                        halign: 'left'
+                    ScaleLabelAxis:
+                        text: 'Very High'
+                        width: 230 * Metrics.dp
+                        halign: 'right'
+            
+            RatingsLabel:
+                text: 'Frustration'
+                id: frustration_label
+            BoxLayout:
+                orientation: 'vertical'
+                ScaleLabel:
+                    text: 'How insecure, discouraged, irritated, stressed, and annoyed were you?'
+                CustomScale:
+                    id: scale_frustration
+                    on_visited: frustration_label.color = (0, 0, 1, 1); root.update_visited_ct(self, self.visited)
+                BoxLayout:
+                    orientation: 'horizontal'
+                    ScaleLabelAxis:
+                        text: 'Very Low'
+                        halign: 'left'
+                    ScaleLabelAxis:
+                        text: 'Very High'
+                        width: 230 * Metrics.dp
+                        halign: 'right'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            spacing: 125 * Metrics.dp
+            padding: [100 * Metrics.dp, 5 * Metrics.dp]
+
+            Button:
+                id: previous-screen
+                text: 'Previous'
+                height: 40 * Metrics.dp
+                width: 230 * Metrics.dp
+                size_hint: None, None
+                font_size: (50 * Metrics.dp) * 0.5
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+                on_press: root.manager.current = 'comparisons'
+
+            Button:
+                id: next-screen2
+                text: 'Next'
+                height: 40 * Metrics.dp
+                width: 230 * Metrics.dp
+                size_hint: None, None
+                font_size: (50 * Metrics.dp) * 0.5
+                text_size: self.size
+                halign: 'center'
+                valign: 'middle'
+                on_press: root.press_next_screen()
+
+<ResultsScreenLayout>
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+        padding: [10 * Metrics.dp, 10 * Metrics.dp]
+        spacing: 2 * Metrics.dp
+        GridLayout:
+            cols: 4
+            size: root.width, root.height
+            padding: [30 * Metrics.dp, 15 * Metrics.dp]
+            spacing: 2 * Metrics.dp
+
+            FactorLabel:
+                text: 'Factor'
+                font_size: self.height * 0.8
+                underline: True
+            NumLabel:
+                text: 'Rating'
+                font_size: self.height * 0.8
+                color: 0.8, 0.8, 1, 1
+                bold: True
+                underline: True
+            NumLabel:
+                text: 'Tally'
+                font_size: self.height * 0.8
+                color: 0.8, 0.8, 1, 1
+                bold: True
+                underline: True
+            NumLabel:
+                text: 'Weight'
+                font_size: self.height * 0.8
+                color: 0.8, 0.8, 1, 1
+                bold: True
+                underline: True
+
+            FactorLabel:
+                id: factor_0
+            NumLabel:
+                id: rating_0
+            NumLabel:
+                id: tally_0
+            NumLabel:
+                id: weight_0
+
+            FactorLabel:
+                id: factor_1
+            NumLabel:
+                id: rating_1
+            NumLabel:
+                id: tally_1
+            NumLabel:
+                id: weight_1
+            
+            FactorLabel:
+                id: factor_2
+            NumLabel:
+                id: rating_2
+            NumLabel:
+                id: tally_2
+            NumLabel:
+                id: weight_2
+            
+            FactorLabel:
+                id: factor_3
+            NumLabel:
+                id: rating_3
+            NumLabel:
+                id: tally_3
+            NumLabel:
+                id: weight_3
+
+            FactorLabel:
+                id: factor_4
+            NumLabel:
+                id: rating_4
+            NumLabel:
+                id: tally_4
+            NumLabel:
+                id: weight_4
+
+            FactorLabel:
+                id: factor_5
+            NumLabel:
+                id: rating_5
+            NumLabel:
+                id: tally_5
+            NumLabel:
+                id: weight_5
+
+        Label:
+            text: 'Total Score: '
+            id: total
+            height: 80 * Metrics.dp
+            padding: 100 * Metrics.dp
+            width: root.width
+            size_hint: None, None
+            font_size: self.height * 0.4
+            text_size: self.size
+            color: 0.7, 0.7, 1, 1
+            halign: 'center'
+            valign: 'middle'
+            bold: True
